@@ -1,3 +1,21 @@
+/*
+ * Copyright © 2022 Ben Petrillo, KingRainbow44. All rights reserved.
+ *
+ * Project licensed under the MIT License: https://www.mit.edu/~amini/LICENSE.md
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+ * OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * All portions of this software are available for public use, provided that
+ * credit is given to the original author(s).
+ */
+
 package dev.benpetrillo.utils.command;
 
 import net.dv8tion.jda.api.entities.Member;
@@ -14,9 +32,7 @@ public final class CommandManager {
     private final static HashMap<String, Command> commands = new HashMap<>();
     private final static HashMap<String, SubCommand> aliases = new HashMap<>();
 
-    public static void registerCommands() {
-
-    }
+    public static void registerCommands() {}
 
     private static void registerCommand(Command command) {
         commands.put(command.getLabel(), command);
@@ -47,19 +63,13 @@ public final class CommandManager {
      * Slash-command parser for our Bukkit-based command system.
      */
     public static void runCommand(SlashCommandEvent event) {
-        if(!commands.containsKey(event.getName())) {
-            if(!aliases.containsKey(event.getName()))
-                event.reply("Unable to find registered command.")
-                        .setEphemeral(true)
-                        .queue();
-            else
-                aliases.get(event.getName())
-                        .prepareForExecution(event);
+        if (!commands.containsKey(event.getName())) {
+            if (!aliases.containsKey(event.getName())) {
+                event.reply("Unable to find registered command.").setEphemeral(true).queue();
+            } else aliases.get(event.getName()).prepareForExecution(event);
             return;
         }
-
-        commands.get(event.getName())
-                .prepareForExecution(event);
+        commands.get(event.getName()).prepareForExecution(event);
     }
 
     public static HashMap<String, Command> getCommands() {
@@ -71,9 +81,9 @@ public final class CommandManager {
     }
 
     public static Object getCommand(String label, boolean getAsAlias) {
-        if(getAsAlias) {
+        if (getAsAlias) {
             Object command = commands.getOrDefault(label, null);
-            if(command != null) return command;
+            if (command != null) return command;
             command = aliases.getOrDefault(label, null);
             return command;
         } else {

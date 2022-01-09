@@ -33,7 +33,7 @@ public final class SoundPewp {
 
     public static void main(String[] args) {
         if (args.length < 1) return;
-        JDABuilder builder = JDABuilder.create(args[0], EnumSet.allOf(GatewayIntent.class));
+        JDABuilder builder = JDABuilder.create(Config.get("TOKEN"), EnumSet.allOf(GatewayIntent.class));
         builder.addEventListeners();
         builder.enableCache(CacheFlag.VOICE_STATE);
         try {

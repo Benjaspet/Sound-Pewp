@@ -29,27 +29,19 @@ public final class InteractiveArguments {
     public void start(Message replyTo) {
         if(index.containsKey(member.getId())) return;
         index.put(member.getId(), 0);
-
-        replyTo.reply(
-                questions.get(index.get(member.getId()))
-        ).queue();
+        replyTo.reply(questions.get(index.get(member.getId()))).queue();
     }
 
     public void continueInteraction(Message response) {
-        answers.put(
-                index.get(member.getId()),
-                response.getContentRaw()
-        ); index.put(member.getId(), index.get(member.getId()) + 1);
-
-        if((index.get(member.getId()) + 1) > questions.size()) {
+        answers.put(index.get(member.getId()), response.getContentRaw());
+        index.put(member.getId(), index.get(member.getId()) + 1);
+        if ((index.get(member.getId()) + 1) > questions.size()) {
             InteractiveArgumentsManager.removeInteraction(this);
             index.remove(member.getId());
             ((Command) CommandManager.getCommand(commandLabel))
                     .prepareForExecution(new ArrayList<>(answers.values()), member, message, response.getChannel(), true);
         } else {
-            response.reply(
-                    questions.get(index.get(member.getId()))
-            ).mentionRepliedUser(false).queue();
+            response.reply(questions.get(index.get(member.getId()))).mentionRepliedUser(false).queue();
         }
     }
 

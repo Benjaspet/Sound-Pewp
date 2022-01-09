@@ -37,10 +37,8 @@ public final class InteractiveArgumentsManager {
     public static void checkInteraction(Message message) {
         if (message.getMember() == null) return;
         if (sessions.containsKey(message.getMember().getId())) {
-            if (!message.getChannel().getId().matches(sessions.get(message.getMember().getId()).getChannel().getId()))
-                return;
-            sessions.get(message.getMember().getId())
-                    .continueInteraction(message);
+            if (!message.getChannel().getId().matches(sessions.get(message.getMember().getId()).getChannel().getId())) return;
+            sessions.get(message.getMember().getId()).continueInteraction(message);
         }
     }
 }
