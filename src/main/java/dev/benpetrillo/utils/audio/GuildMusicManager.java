@@ -16,7 +16,7 @@
  * credit is given to the original author(s).
  */
 
-package dev.benpetrillo.managers;
+package dev.benpetrillo.utils.audio;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
