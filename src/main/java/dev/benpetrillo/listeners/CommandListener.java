@@ -27,4 +27,25 @@ import org.jetbrains.annotations.NotNull;
 
 public final class CommandListener extends ListenerAdapter {
 
+    @Override
+    public void onMessageReceived(MessageReceivedEvent event) {
+        if (!event.getChannelType().isGuild()) return;
+        if (event.getAuthor().isBot()) return;
+
+        String message = event.getMessage().getContentRaw();
+        String prefix = Config.get("PREFIX");
+        if (!message.startsWith(prefix)) return;
+        if (message.split(prefix).length < 2) return;
+
+        CommandManager.runCommand(
+                message.split(prefix)[1].split(" ")[0],
+                event.getMember(), event.getMessage(),
+                event.getChannel(), prefix
+        );
+    }
+
+    @Override
+    public void onSlashCommand(@NotNull SlashCommandEvent event) {
+        CommandManager.runCommand(event);
+    }
 }
